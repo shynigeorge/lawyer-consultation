@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debit Card Payment Form</title>
+    <script src="https://unpkg.com/htmx.org@1.6.0"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('/static/img/bank2.jpg') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .card {
+            position: relative;
+            width: 500px;
+            padding: 30px;
+            border-radius: 15px;
+            background: linear-gradient(to bottom, #3498db, #2980b9);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            transform: translateY(0);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+            background-color: rgba(255, 255, 255, 0.8);
+            transition: background-color 0.3s;
+        }
+
+        input:focus {
+            background-color: #fff;
+        }
+
+        .card-number,
+        .card-expiry-cvv,
+        .card-pin {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .card-expiry,
+        .card-cvv,
+        .card-pin {
+            width: calc(100% / 3 - 10px);
+        }
+
+        .submit-btn {
+            position: relative;
+            background-color: #fff;
+            color: #3498db;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(52, 152, 219, 0.8), 0 0 30px rgba(52, 152, 219, 0.5);
+            animation: glow 1s infinite alternate;
+        }
+
+        .submit-btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 4px;
+            box-shadow: 0 0 20px rgba(52, 152, 219, 0.8), 0 0 30px rgba(52, 152, 219, 0.5);
+            opacity: 0;
+            animation: glow 1s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0.6;
+            }
+        }
+    </style>
+</head>
+<body>
+<form method="post">
+    {% csrf_token %}
+    <div class="card">
+            <div style="width:500px;margin-top:10px;">
+                        <label style="font-size:20px;">Choose Another Card</label>
+                        <select name="card" hx-get="{% url 'carddyn' %}" hx-trigger="change" hx-target="#modules" style="width:500px;height:40px;background-color:rgba(255, 255, 255, 0.8);text-align:center;border-radius: 4px;">
+                            {% for i in cards %}
+                            <option value="{{i.id}}">{{i.card_holder_name}} -- {{i.card_no}}</option>
+                            {% endfor %}
+                        </select>
+            </div>
+        <div id="modules">
+        <label for="cardNumber">Card Number</label>
+        <input type="text" id="cardNumber" class="card-number" value="{{cd.card_no}}" maxlength="16" minlength="16"  name="cno" placeholder="XXXX XXXX XXXX XXXX">
+
+        <label for="expiry">Expiry Date</label>
+        <div class="card-expiry-cvv">
+            {% if cd.expiry_date %}
+            <input type="date" id="expi" class="card-expiry" name="exp" value="{{cd.expiry_date|date:'y-m-d'}}" placeholder="">
+            {% else %}
+            <input type="date" id="expiry" class="card-expiry" name="exp" value="{{cd.expiry_date|date:'y-m-d'}}" placeholder="">
+            {% endif %}
+            <label for="cvv">CVV</label>
+            <input type="text" id="cvv" class="card-cvv" maxlength="3" minlength="3" name="cvv" value="{{cd.cvv}}" placeholder="XXX">
+        </div>
+
+        <label for="pin">PIN</label>
+        <input type="password" id="pin" class="card-pin" name="pin" maxlength="4" minlength="4" value="{{cd.pin}}" placeholder="****">
+
+        <label for="cardHolderName">Card Holder Name</label>
+        <input type="text" id="cardHolderName" name="cname" value="{{cd.card_holder_name}}" placeholder="card holder name">
+
+        <button type="submit" class="submit-btn" >Add Card</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>

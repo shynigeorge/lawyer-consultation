@@ -1,0 +1,14 @@
+{% extends 'dash/base.html' %}
+{% block content %}
+
+{% if messages %}
+{% for i in messages %}
+<script>
+  alert("{{i}}")
+</script>
+{% endfor %}
+{% endif %}
+
+{% include 'dash/subcat.html' %}
+
+{% endblock %}

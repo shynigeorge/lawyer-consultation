@@ -1,0 +1,188 @@
+
+{% if messages %}
+{% for i in messages %}
+<script>
+  alert("{{i}}")
+</script>
+{% endfor %}
+{% endif %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<link href="static/assests/css/cust_reg.css" rel="stylesheet">
+<section class=" bg-dark">
+  <div class="container py-5 ">
+    <div class="row d-flex justify-content-center align-items-center">
+      <div class="col">
+        <div class="card card-registration my-4">
+          <div class="row g-0">
+            <div class="col-xl-6 d-none d-xl-block">
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
+                alt="Sample photo" class="img-fluid"
+                style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;height:1500px" />
+            </div>
+            <div class="col-xl-6">
+              <div class="card-body p-md-5 text-black">
+                 <form method="POST"  enctype="multipart/form-data" id="personForm" action="{% url 'ajax_load_branch' %}">
+                   {% csrf_token %}
+                <h3 class="mb-5 text-uppercase">Advocate Registration</h3>
+
+                <div class="row">
+
+                  <div class="col-md-6 mb-4">
+
+                    <div class="form-outline">
+                      <input type="text" id="fname" name="fname" class="form-control form-control-lg" />
+                      <label class="form-label" for="fname">First name</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <input type="text" id="lname" name="lname" class="form-control form-control-lg" />
+                      <label class="form-label" for="lname">Last name</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
+
+                  <h6 class="mb-0 me-4">Gender: </h6>
+
+                  <div class="form-check form-check-inline mb-0 me-4">
+                    <input class="form-check-input" type="radio"  name="gender" id="femaleGender"
+                      value="female" />
+                    <label class="form-check-label" for="femaleGender">Female</label>
+                  </div>
+
+                  <div class="form-check form-check-inline mb-0 me-4">
+                    <input class="form-check-input" type="radio" name="gender" id="maleGender"
+                      value="male" />
+                    <label class="form-check-label" for="maleGender">Male</label>
+                  </div>
+
+                  <div class="form-check form-check-inline mb-0">
+                    <input class="form-check-input" type="radio" name="gender" id="otherGender"
+                      value="other" />
+                    <label class="form-check-label" for="otherGender">Other</label>
+                  </div>
+
+                </div>
+
+
+                     <div class="form-outline mb-4">
+                  <input type="text" id="experience" name="experience" class="form-control form-control-lg" />
+                  <label class="form-label" for="experience">experience</label>
+                </div>
+
+                     <div class="form-outline mb-4">
+                  <input type="text" id="Description" name="Description" class="form-control form-control-lg" />
+                  <label class="form-label" for="Description">Description</label>
+                </div>
+
+                       <div class="form-outline mb-4">
+                  <input type="file" id="image" name="image" class="form-control form-control-lg" />
+                  <label class="form-label" for="image">image</label>
+                </div>
+
+        <div class="form-outline mb-4">
+          <select name="cat" id="category" onchange="loadSubcategories()">
+              <option>Select</option>
+               {% for i in categories %}
+            <option  value="{{i.id}}" >{{i.Cat_name}} </option>
+            {% endfor %}
+          </select>
+                </div>
+
+                 <div class="form-outline mb-4">
+          <select name="subcat" id="subcategory">
+              <option value="">Select</option>
+
+          </select>
+                </div>
+
+                 <div class="form-outline mb-4">
+                  <input type="email" id="email" name="email" class="form-control form-control-lg" />
+                  <label class="form-label" for="email">Email</label>
+                </div>
+
+                <div class="form-outline mb-4">
+                  <input type="text" id="state" name="state" class="form-control form-control-lg" />
+                  <label class="form-label" for="dob">State</label>
+                </div>
+
+                 <div class="form-outline mb-4">
+                  <input type="text" id="city" name="city" class="form-control form-control-lg" />
+                  <label class="form-label" for="city">City</label>
+                </div>
+
+                      <div class="form-outline mb-4">
+                  <input type="text" id="dist" name="dist" class="form-control form-control-lg" />
+                  <label class="form-label" for="dist">District</label>
+                </div>
+
+
+                <div class="form-outline mb-4">
+                  <input type="date" id="dob" name="dob" class="form-control form-control-lg" />
+                  <label class="form-label" for="dob">DOB</label>
+                </div>
+
+
+
+                <div class="form-outline mb-4">
+                  <input type="text" id="pincode" name="pin" maxlength="6"class="form-control form-control-lg" />
+                  <label class="form-label" for="pincode">Pincode</label>
+                </div>
+
+                <div class="form-outline mb-4">
+                  <input type="text" id="form3Example99" name="phno" maxlength="10" class="form-control form-control-lg" />
+                  <label class="form-label" for="form3Example99">Phone No</label>
+                </div>
+
+                <div class="form-outline mb-4">
+                  <input type="password" id="password" name="pass" class="form-control form-control-lg" />
+                  <label class="form-label" for="password">Password</label>
+                </div>
+
+                <div class="form-outline mb-4">
+                  <input type="password" id="conformpassword" name="cpass" class="form-control form-control-lg" />
+                  <label class="form-label" for="conformpassword">Conform Password</label>
+                </div>
+
+
+                <div class="d-flex justify-content-end pt-3">
+                 <button type="submit" class="btn btn-warning btn-lg ms-2">Submit form</button>
+                </div>
+ </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+ <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+        function loadSubcategories() {
+            var category_id = $('#category').val();
+
+            $.ajax({
+                type: 'POST',
+                url: 'get_subcategories',  // URL mapped in urls.py
+                data: {
+                    category_id: category_id,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function(response) {
+                console.log(response);
+                    var subcategorySelect = $('#subcategory');
+                    subcategorySelect.empty();
+
+                    $.each(response, function(index, subcategory) {
+                        subcategorySelect.append('<option value="' + subcategory.id + '">' + subcategory.sub_name + '</option>');
+                    });
+                }
+            });
+        }
+    </script>

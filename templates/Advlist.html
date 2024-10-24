@@ -1,0 +1,192 @@
+
+
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+<link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/slicknav.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="{% static 'assets/css/cust_reg.css' %}">
+<body>
+<header>
+    <!--? Header Start -->
+    <div class="header-area">
+        <div class="main-header  header-sticky">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <!-- Logo -->
+                    <div class="col-xl-2 col-lg-2 col-md-1">
+                        <div class="logo">
+                            <a href="index.html"><img src="{% static 'assets/img/logo/logo.png' %}" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="col-xl-10 col-lg-10 col-md-10">
+                        <div class="menu-main d-flex align-items-center justify-content-end">
+                            <!-- Main-menu -->
+                            <div class="main-menu f-right d-none d-lg-block">
+                                <nav>
+                                    <ul id="navigation">
+                                        <li><a href="{% url 'adv' %}">Home</a></li>
+                                        <li><a href="about.html">About</a></li>
+                                        <li><a href="services.html">Services</a></li>
+                                        <li><a href="cases.html">Case Studies </a></li>
+                                        {% if user.is_authenticated %}
+                                         <li><a href="{% url 'cust_reg' %}">welcome,{{user.first_name}}</a>
+                                         <li><a href="{% url 'logout' %}">Logout</a>
+                                        {% else %}
+                                        <li><a>Registration</a>
+                                        <ul class="submenu">
+                                                <li><a href="{% url 'cust_reg' %}">Customer Registration</a></li>
+                                                <li><a href="{% url 'ajax_load_branch' %}">Advocate Registration</a></li>
+                                        </ul>
+                                        </li>
+
+                                        </li>
+
+                                     </ul>
+                                </nav>
+                            </div>
+                            <div class="header-right-btn f-right d-none d-lg-block ml-30">
+                                <a href="{% url 'login' %}" class="header-btn">Login</a>
+                            </div>
+                            {% endif%}
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+{% block content %}
+
+<style>
+  body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+
+  }
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 100px;
+  }
+  .card {
+    width: calc(33.33% - 40px);
+    background-color: #fff;
+    border-radius: 10px;
+    margin: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease;
+  }
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  .card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+  }
+  .card .content {
+    padding: 30px;
+  }
+  .card h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    color: #333;
+    font-size: 20px;
+  }
+  .card p {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #666;
+    font-size: 16px;
+  }
+  .card .button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .card .button:hover {
+    background-color: #0056b3;
+  }
+  .card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 123, 255, 0.2);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+    border-radius: 10px;
+  }
+  .card:hover::after {
+    opacity: 1;
+  }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    {% if adv %}
+  {% for i in adv %}
+  <div class="card" style="text-align:center;">
+    <img src="{{i.Adv_image.url}}" alt="Advocate 1" >
+    <div class="content">
+      <h2>{{i.Adv_fname}}</h2>
+      <p>{{i.Adv_subcategory}}<br>Experience:
+      {{i.Adv_experience}} yrs </p>
+      <a href="{% url 'book' i.id %}" class="button">Book</a>
+    </div>
+  </div>
+  {% endfor %}
+  <!-- Add more cards as needed -->
+    {% else %}
+    <h2 style="text-align:center;color:red;">No Advocates available for this case</h2>
+    {% endif %}
+</div>
+
+</body>
+
+{% endblock %}

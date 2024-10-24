@@ -1,0 +1,78 @@
+
+{% block content %}
+<style>
+    .container {
+  padding: 2rem 0rem;
+}
+
+h4 {
+  margin: 2rem 0rem 1rem;
+}
+
+
+.table-image {
+  td, th {
+    vertical-align: middle;
+  }
+}
+</style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<div class="me-4">
+
+</div><br>
+
+<div class="container">
+  {% if bv %}
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+             <th scope="col">Id</th>
+            <th scope="col">Advocate</th>
+              <th scope="col">Case type</th>
+
+            <th scope="col">case amount</th>
+            <th scope="col">Booking date</th>
+            <th scope="col">Booking status</th>
+            <th scope="col">Payment</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for i in bv %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{i.adv.Adv_fname}}</td>
+            <td>{{i.case_details }}</td>
+            {% if i.booking.payment == None %}
+            <td>not confirmed</td>
+            {% else %}
+            <td>₹ {{i.booking.payment}}</td>
+            {% endif %}
+            <td>{{i.booking.date}}</td>
+            {% if i.booking.status == 'approved' %}
+            <td style="color:green;">{{i.booking.status}}</td>
+            {% if i.booking.paid == 'paid' %}
+            <td style="text-align:center;"><a><button type="submit" class="btn btn-success" style="padding-right:40px;padding-left:40px;">Paid</button></a><a href="{% url 'pdf' i.booking.id %}"><button type="button" class="btn btn-light" style="margin-left:10px;">Print Invoice</button></a></td>
+            {% elif i.booking.paid == 'rejected' %}
+            <td style="text-align:center;"><a><button type="submit" class="btn btn-danger" style="padding-right:35px;padding-left:35px;">Rejected</button></a></td>
+            {% else %}
+            <td style="text-align:center;"><a href="{% url 'pay' i.id i.booking.payment %}"><button type="submit" class="btn btn-primary">Payment</button></a></td>
+            {% endif %}
+            {% else %}
+            <td style="color:red;">{{i.booking.status}}</td>
+            <td style="text-align:center;"><a href=""><button type="submit" class="btn btn-warning">Not available</button></a></td>
+              {% endif %}
+          </tr>
+       {% endfor %}
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% else %}
+  <h2 style="text-align:center;color:red;">No bookings yet..</h2>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML CSS Table</title>
+<style>
+    /* CSS for table */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        background-color: #e6f7ff; /* Light blue background color */
+        opacity: 0; /* Initially set opacity to 0 */
+        animation: fadeIn 1s ease forwards; /* Animation to fade in */
+    }
+
+    th, td {
+        border: 2px solid #dddddd;
+        text-align: center;
+        padding: 8px;
+        color:black;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    /* Keyframes for the fadeIn animation */
+    @keyframes fadeIn {
+        from {
+            opacity: 0; /* Start with opacity 0 */
+        }
+        to {
+            opacity: 1; /* End with opacity 1 */
+        }
+    }
+
+    /* CSS for navigation bar */
+    .navbar {
+        background-color: #333;
+        overflow: hidden;
+    }
+
+    .navbar a {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 20px;
+        text-decoration: none;
+    }
+
+    .navbar a:hover {
+        background-color: #ddd;
+        color: black;
+    }
+
+</style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<div class="navbar">
+    <a href="#" onclick="history.go(-1); return false;">Go Back</a>
+</div>
+
+<!-- HTML Table -->
+<table>
+    <thead>
+        <tr>
+            {% for i in cat %}
+            <th>{{i.Cat_name}}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+           {% for j in cat %}
+          <td><ol>{% for i in scat %}{% if i.category.id == j.id %}<li><a href="{% url 'alist' i.id %}"><h4 style="color:black;">{{i.sub_name}}</h4></a>{% endif %}{% endfor %}</ol></td>
+          {% endfor %}
+        </tr>
+
+    </tbody>
+</table>
+
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+{% extends 'dash/base.html' %}
+{% block content %}
+
+<style>
+  td, th {
+    vertical-align: middle;
+    background-color:white;
+    color:black;
+  }
+}
+</style>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-bordered">
+                            <thead>
+                                <tr class="text-white">
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Advocate Name</th>
+                                    <th scope="col">Advocate DOB</th>
+                                    <th scope="col">Experience</th>
+                                    <th scope="col">Specialization</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in adv %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{i.Adv_fname}}</td>
+                                    <td>{{i.Adv_dob}}</td>
+                                    <td>{{i.Adv_experience}}</td>
+                                    <td>{{i.Adv_subcategory}}</td>
+                                    {% if i.Adv_approval == False %}
+                                    <td><a href="{% url 'adva' i.id %}"><button style="padding-right:15px;padding-left:15px;" class="btn btn-success btn-sm">Approve</button></a></td>
+                                    {% else %}
+                                    <td><a href="{% url 'advd' i.id %}"><button style="padding-right:15px;padding-left:15px;" class="btn btn-danger btn-sm">Depprove</button></a></td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+{% endblock %}

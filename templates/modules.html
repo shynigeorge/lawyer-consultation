@@ -1,0 +1,22 @@
+
+        <label for="cardNumber">Card Number</label>
+        <input type="text" id="cardNumber" class="card-number" value="{{cd.card_no}}" maxlength="16" minlength="16"  name="cno" placeholder="XXXX XXXX XXXX XXXX">
+
+        <label for="expiry">Expiry Date</label>
+        <div class="card-expiry-cvv">
+            {% if cd.expiry_date %}
+            <input type="date" id="expi" class="card-expiry" name="exp" value="{{cd.expiry_date|date:'y-m-d'}}" placeholder="">
+            {% else %}
+            <input type="date" id="expiry" class="card-expiry" name="exp" value="{{cd.expiry_date|date:'y-m-d'}}" placeholder="">
+            {% endif %}
+            <label for="cvv">CVV</label>
+            <input type="text" id="cvv" class="card-cvv" maxlength="3" minlength="3" name="cvv" value="{{cd.cvv}}" placeholder="XXX">
+        </div>
+
+        <label for="pin">PIN</label>
+        <input type="password" id="pin" class="card-pin" name="pin" maxlength="4" minlength="4" value="{{cd.pin}}" placeholder="****">
+
+        <label for="cardHolderName">Card Holder Name</label>
+        <input type="text" id="cardHolderName" name="cname" value="{{cd.card_holder_name}}" placeholder="card holder name">
+
+        <button type="submit" class="submit-btn" >Add Card</button>

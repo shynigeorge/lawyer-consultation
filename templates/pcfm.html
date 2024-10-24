@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Confirmation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .confirmation-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        h2 {
+            color: #3498db;
+        }
+
+        p {
+            color: #555;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .confirmation-details {
+            margin-top: 20px;
+        }
+
+        .details-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .details-label {
+            color: #333;
+            font-weight: bold;
+        }
+
+        .details-value {
+            color: #555;
+        }
+
+        .confirmation-button {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .confirm-btn {
+            background-color: #3498db;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        span{
+            font-size:19px;
+        }
+
+        .confirm-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .back-to-home {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-to-home a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-to-home a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="confirmation-container">
+        <h2>Payment Confirmation</h2>
+        <p style="text-align:center;">Confirm your payment..!</p>
+
+        <div class="confirmation-details">
+            <div class="details-row">
+                <span class="details-label">Transaction ID:</span>
+                <span class="details-value">123456789</span>
+            </div>
+            <div class="details-row">
+                <span class="details-label">Advocate Name:</span>
+                <span class="details-value">{{cs.adv.Adv_fname}}</span>
+            </div>
+            <div class="details-row">
+                <span class="details-label">Booking ID:</span>
+                <span class="details-value">{{cs.booking.id}}</span>
+            </div>
+            <div class="details-row">
+                <span class="details-label">Amount:</span>
+                <span class="details-value" style="color:green;">₹ {{cs.booking.payment}}</span>
+            </div>
+            <div class="details-row">
+                <span class="details-label">Date:</span>
+                <span class="details-value">{% now "SHORT_DATE_FORMAT" %}</span>
+            </div>
+        </div>
+            <form method="post">
+                {% csrf_token %}
+        <div class="confirmation-button">
+            <button class="confirm-btn">Confirm</button>
+        </div>
+                <div class="confirmation-button">
+            <button class="confirm-btn">Cancel</button>
+        </div>
+           </form>
+
+        <div class="back-to-home">
+            <p>Back to <a href="{% url 'adv' %}">Home</a></p>
+        </div>
+    </div>
+
+    <script>
+        function confirmPayment() {
+            alert('Payment Confirmed!');
+            // You can add additional actions here, such as redirecting to another page.
+        }
+    </script>
+
+</body>
+</html>
